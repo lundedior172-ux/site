@@ -5,21 +5,151 @@ body {
 
 body {
   align-items: center;
-  background: #ffffff;
-  color: #171717;
+  background: #171629;
+  background-image:
+    radial-gradient(circle at 12% 12%, rgba(137, 76, 157, 0.42), transparent 32%),
+    radial-gradient(circle at 88% 20%, rgba(42, 126, 151, 0.3), transparent 30%),
+    radial-gradient(circle at 72% 92%, rgba(116, 54, 111, 0.34), transparent 36%),
+    linear-gradient(135deg, #131322 0%, #211d3a 52%, #182a3a 100%);
+  color: #f4e8d4;
   display: flex;
   justify-content: center;
   margin: 0;
   min-height: 100svh;
+  overflow: hidden;
   font-family: Arial, sans-serif;
+  isolation: isolate;
+  position: relative;
+}
+
+body::before {
+  background:
+    radial-gradient(ellipse at center, rgba(250, 210, 166, 0.16), transparent 42%),
+    radial-gradient(ellipse at 32% 64%, rgba(91, 187, 193, 0.14), transparent 34%);
+  content: "";
+  inset: -25%;
+  position: absolute;
+  z-index: -1;
+  animation: ambient-drift 16s ease-in-out infinite alternate;
+}
+
+body::after {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  content: "";
+  inset: 0;
+  opacity: 0.35;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
 }
 
 main {
+  position: relative;
   text-align: center;
   width: 100%;
 }
 
+main::before {
+  background: radial-gradient(ellipse, rgba(242, 178, 139, 0.2), transparent 68%);
+  content: "";
+  height: 20rem;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(82vw, 44rem);
+  z-index: -1;
+  animation: halo-pulse 6s ease-in-out infinite;
+}
+
 p {
-  font-size: clamp(2rem, 8vw, 6rem);
+  background: linear-gradient(
+    110deg,
+    #e8a987 8%,
+    #ffe7b7 32%,
+    #fff5d8 48%,
+    #c8a5dc 68%,
+    #e5a687 92%
+  );
+  background-size: 220% auto;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 0.8rem rgba(244, 177, 143, 0.28))
+    drop-shadow(0 0 2.5rem rgba(139, 108, 190, 0.2));
+  font-family: Baskerville, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: clamp(2.25rem, 9vw, 6rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.08;
   margin: 0;
+  padding: 0.12em 0.15em;
+  animation:
+    breathe 6s ease-in-out infinite,
+    shimmer 12s ease-in-out infinite;
+}
+
+@keyframes ambient-drift {
+  0% {
+    opacity: 0.68;
+    transform: translate3d(-2%, -1%, 0) scale(0.96);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(2%, 1%, 0) scale(1.04);
+  }
+}
+
+@keyframes halo-pulse {
+  0%,
+  100% {
+    opacity: 0.62;
+    transform: translate(-50%, -50%) scale(0.94);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.92;
+    transform: translateY(0) scale(0.99);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-0.12rem) scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0%,
+  35% {
+    background-position: 0% 50%;
+  }
+
+  65%,
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  main::before,
+  p {
+    animation: none;
+  }
+
+  p {
+    background-position: 50% 50%;
+  }
 }
